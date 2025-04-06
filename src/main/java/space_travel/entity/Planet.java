@@ -1,4 +1,4 @@
-package spaceTravel.planet;
+package space_travel.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,11 +1,11 @@
-package storage.hibernate;
+package config;
 
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import spaceTravel.passenger.Passenger;
-import spaceTravel.planet.Planet;
-import spaceTravel.ticket.Ticket;
+import space_travel.entity.Passenger;
+import space_travel.entity.Planet;
+import space_travel.entity.Ticket;
 
 public class HibernateUtil {
 

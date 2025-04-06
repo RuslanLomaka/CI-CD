@@ -1,10 +1,9 @@
-package spaceTravel.ticket;
+package space_travel.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import spaceTravel.planet.Planet;
 
 import java.time.Instant;
 
