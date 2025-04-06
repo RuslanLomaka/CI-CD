@@ -1,22 +1,30 @@
 package app;
 import org.flywaydb.core.Flyway;
-import space_travel.entity.Passenger;
+import space_travel.entity.Client;
 import space_travel.entity.Planet;
 import space_travel.entity.Ticket;
-import space_travel.impl.PassengerCrudServiceImpl;
+import space_travel.impl.ClientCrudServiceImpl;
 import space_travel.impl.PlanetCrudServiceImpl;
 import space_travel.impl.TicketCrudServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import space_travel.service.ClientCrudService;
+import space_travel.service.PlanetCrudService;
+import space_travel.service.TicketCrudService;
 
 import java.time.Instant;
 import java.util.List;
 
 public class App {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     public static void main(String[] args) {
+        // Migrate
+        migrate(); // uncomment if needed
 
         // Initialize services
-        PassengerCrudServiceImpl passengerService = new PassengerCrudServiceImpl();
-        PlanetCrudServiceImpl planetService = new PlanetCrudServiceImpl();
-        TicketCrudServiceImpl ticketService = new TicketCrudServiceImpl();
+        ClientCrudService passengerService = new ClientCrudServiceImpl();
+        PlanetCrudService planetService = new PlanetCrudServiceImpl();
+        TicketCrudService ticketService = new TicketCrudServiceImpl();
 
         // === PLANET ===
         Planet mars = new Planet();
@@ -24,57 +32,59 @@ public class App {
         mars.setName("Mars");
         try {
             planetService.save(mars);
-            System.out.println("✅ Планету успішно збережено.");
+            if (logger.isInfoEnabled()) logger.info("✅ Планету успішно збережено.");
         } catch (Exception e) {
-            System.out.println("⚠️ Помилка при збереженні: " + e.getMessage());
+            if (logger.isWarnEnabled()) {
+                logger.warn("⚠️ Помилка при збереженні: {}", e.getMessage());
+            }
         }
 
         try {
             planetService.save(mars);
-            System.out.println("✅ Планету успішно збережено.");
+            logger.info("✅ Планету успішно збережено.");
         } catch (Exception e) {
-            System.out.println("⚠️ Помилка при збереженні: " + e.getMessage());
+            logger.warn("⚠️ Помилка при збереженні: {}", e.getMessage());
         }
 
         mars.setName("Red Planet");
         planetService.update(mars);
 
         Planet foundPlanet = planetService.findById("MARS");
-        System.out.println("Found Planet: " + foundPlanet);
+        logger.info("Found Planet: {}", foundPlanet);
 
         List<Planet> allPlanets = planetService.findAll();
-        System.out.println("All Planets: " + allPlanets);
+        logger.info("All Planets: {}", allPlanets);
 
         // === PASSENGER ===
-        Passenger p = new Passenger();
+        Client p = new Client();
         p.setName("Test Passenger");
         p.setPassport("TP001");
 
         try {
             passengerService.save(p);
         } catch (IllegalArgumentException e) {
-            System.out.println("ℹ️ Passenger already exists, maybe update?");
+            logger.info("ℹ️ Passenger already exists, maybe update?");
         }
 
         try {
             passengerService.save(p);
         } catch (IllegalArgumentException e) {
-            System.out.println("ℹ️ Passenger already exists, maybe update?");
+            logger.info("ℹ️ Passenger already exists, maybe update?");
         }
 
         // Find the saved passenger to get the generated ID
-        Passenger savedPassenger = passengerService.findAll().stream()
-                .filter(passenger -> "TP001".equals(passenger.getPassport()))
+        Client savedClient = passengerService.findAll().stream()
+                .filter(client -> "TP001".equals(client.getPassport()))
                 .findFirst().orElseThrow();
 
-        savedPassenger.setName("Updated Passenger");
-        passengerService.update(savedPassenger);
+        savedClient.setName("Updated Passenger");
+        passengerService.update(savedClient);
 
-        Passenger foundPassenger = passengerService.findById(savedPassenger.getPassengerId());
-        System.out.println("Found Passenger: " + foundPassenger);
+        Client foundClient = passengerService.findById(savedClient.getId());
+        logger.info("Found Passenger: {}", foundClient);
 
-        List<Passenger> allPassengers = passengerService.findAll();
-        System.out.println("All Passengers: " + allPassengers);
+        List<Client> allClients = passengerService.findAll();
+        logger.info("All Passengers: {}", allClients);
 
         // === TICKET ===
         Ticket ticket = new Ticket();
@@ -89,20 +99,20 @@ public class App {
         ticketService.update(savedTicket);
 
         Ticket foundTicket = ticketService.findById(savedTicket.getTicketId());
-        System.out.println("Found Ticket: " + foundTicket);
+        logger.info("Found Ticket: {}", foundTicket);
 
         List<Ticket> allTickets = ticketService.findAll();
-        System.out.println("All Tickets: " + allTickets);
+        logger.info("All Tickets: {}", allTickets);
 
         // === DELETE ===
-        passengerService.deleteById(savedPassenger.getPassengerId());
+        passengerService.deleteById(savedClient.getId());
         planetService.deleteById("MARS");
         ticketService.deleteById(savedTicket.getTicketId());
 
-        System.out.println("Everything executed.");
+        logger.info("Everything executed.");
     }
 
-    public static void migrate(){
+    public static void migrate() {
         Flyway.configure()
                 .dataSource("jdbc:h2:./spacetrain", "", "")
                 .load()

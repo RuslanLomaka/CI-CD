@@ -7,7 +7,7 @@ VALUES ('MARS', 'Mars'),
        ('SAT', 'Saturn');
 
 -- Insert passengers
-INSERT INTO passenger (name, passport)
+INSERT INTO client (name, passport)
 VALUES ('Тарас Шевченко', 'UA001'),
        ('Симон Петлюра', 'UA002'),
        ('Степан Бандера', 'UA003'),
@@ -20,7 +20,7 @@ VALUES ('Тарас Шевченко', 'UA001'),
        ('Михайло Грушевський', 'UA010');
 
 -- Insert tickets
--- Note: Use actual passenger IDs if they are generated; assuming 1–10 here
+-- Note: Use actual client IDs if they are generated; assuming 1–10 here
 INSERT INTO ticket (createdAt, client_id, from_planet_id, to_planet_id)
 VALUES (NOW(), 1, 'EAR', 'MARS'),
        (NOW(), 2, 'MARS', 'VEN'),

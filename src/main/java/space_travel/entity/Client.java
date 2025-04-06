@@ -3,13 +3,13 @@ package space_travel.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Table(name = "passenger")
+@Table(name = "client")
 @Data
 @Entity
-public class Passenger {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long passengerId;
+    private Long id;
 
     @Column
     private String name;
@@ -20,7 +20,7 @@ public class Passenger {
     @Override
     public String toString(){
 
-        return "Passenger [id=" + passengerId + ", name=" + name + ", passport=" + passport + "]";
+        return "Passenger [id=" + id + ", name=" + name + ", passport=" + passport + "]";
     }
 
 }
