@@ -19,7 +19,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        //App.migrate();
+        App.migrate();
         HibernateUtil h = HibernateUtil.getInstance();
         Session session = h.getSessionFactory().openSession();
 //        Transaction tx = session.beginTransaction();
