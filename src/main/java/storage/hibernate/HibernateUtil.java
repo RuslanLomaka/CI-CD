@@ -3,7 +3,9 @@ package storage.hibernate;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import passenger.Passenger;
+import spaceTravel.passenger.Passenger;
+import spaceTravel.planet.Planet;
+import spaceTravel.ticket.Ticket;
 
 public class HibernateUtil {
 
@@ -14,11 +16,13 @@ public class HibernateUtil {
     }
 
     @Getter
-    private SessionFactory sessionFactory;
+    private  SessionFactory sessionFactory;
 
     private HibernateUtil() {
         sessionFactory = new Configuration()
                 .addAnnotatedClass(Passenger.class)
+                .addAnnotatedClass(Planet.class)
+                .addAnnotatedClass(Ticket.class)
                 .buildSessionFactory();
     }
 
@@ -31,7 +35,4 @@ public class HibernateUtil {
         sessionFactory.close();
     }
 
-    public static void main(String[] args) {
-
-    }
 }

@@ -1,4 +1,4 @@
-package passenger;
+package spaceTravel.passenger;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +8,7 @@ import lombok.Data;
 @Entity
 public class Passenger {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long passengerId;
 
     @Column
@@ -16,9 +17,9 @@ public class Passenger {
     @Column
     private String passport;
 
-    @OneToOne
+    @Override
     public String toString(){
-        return passengerId + "\t" + name + "\t" + passport;
+        return "Passenger [id=" + passengerId + ", name=" + name + "]";
     }
 
 }

@@ -17,6 +17,7 @@
     <lombok.version>1.18.38</lombok.version>
     <junit.version>3.8.1</junit.version>
     <flyway.version>11.6.0</flyway.version>
+    <validation.version>3.1.1</validation.version>
   </properties>
 
   <dependencies>
@@ -31,6 +32,14 @@
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate.verion}</version>
     </dependency>
+
+
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <version>${validation.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
