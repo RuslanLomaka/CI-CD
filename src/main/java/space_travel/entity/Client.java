@@ -3,6 +3,9 @@ package space_travel.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name = "client")
 @Data
 @Entity
@@ -16,6 +19,9 @@ public class Client {
 
     @Column
     private String passport;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
 
     @Override
     public String toString(){

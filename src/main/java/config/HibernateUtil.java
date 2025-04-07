@@ -9,6 +9,7 @@ import space_travel.entity.Ticket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Getter
 @SuppressWarnings("java:S6548") // "Avoid using the singleton pattern"
 public class HibernateUtil {
 
@@ -16,8 +17,7 @@ public class HibernateUtil {
     private static final HibernateUtil INSTANCE = new HibernateUtil();
 
 
-    @Getter
-    private  SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     public static HibernateUtil getInstance() {
         return INSTANCE;
     }

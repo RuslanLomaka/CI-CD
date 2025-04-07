@@ -19,6 +19,7 @@
         <flyway.version>11.6.0</flyway.version>
         <validation.version>3.1.1</validation.version>
         <slf4j.version>2.1.0-alpha1</slf4j.version>
+        <mochito.version>5.17.0</mochito.version>
     </properties>
 
     <dependencies>
@@ -66,6 +67,27 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mochito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 

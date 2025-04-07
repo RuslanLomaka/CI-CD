@@ -29,6 +29,10 @@ public class Ticket {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Planet toPlanet;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    private Client client;
+
     @Override
     public String toString() {
         return "Ticket [ticketId=" + ticketId + ", createdAt=" + createdAt + "]";
