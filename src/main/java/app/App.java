@@ -62,8 +62,7 @@ public class App {
     private static final String MSG_EXECUTION_DONE = "Everything executed.";
 
     public static void main(String[] args) {
-        // Migrate DB if needed
-        // migrate();
+
 
         // Initialize services
         ClientCrudService passengerService = new ClientCrudServiceImpl();
