@@ -17,39 +17,44 @@ import space_travel.service.TicketCrudService;
 import java.time.Instant;
 import java.util.List;
 
-// ✅ Підсумок виконаної роботи
+// ✅ Work summary
 /*
-Налаштовано зв’язки між сутностями:
-У сутності Client додано зв’язок @OneToMany з квитками (List<Ticket>).
-У сутності Ticket додано зв’язки @ManyToOne до Client, fromPlanet і toPlanet.
-Реалізовано логіку перевірки в методі save() класу TicketCrudServiceImpl:
-Якщо client дорівнює null або не існує в БД — кидається IllegalArgumentException.
-Якщо fromPlanet дорівнює null або не існує в БД — кидається виняток.
-Якщо toPlanet дорівнює null або не існує в БД — кидається виняток.
-Створено JUnit-тест TicketCrudServiceImplTest, який перевіряє шість критичних ситуацій:
-client == null
-client не знайдено у базі даних
-fromPlanet == null
-fromPlanet не знайдено у базі даних
-toPlanet == null
-toPlanet не знайдено у базі даних
-Використано Mockito для мокування залежностей:
-Замокано сервіси ClientCrudService і PlanetCrudService.
-Метод findById(...) для клієнта/планети підставляє null або валідні значення для контролю поведінки методу save().
-Тести ізольовані від справжньої БД.
-Особлива увага приділена виправленню попереджень Sonar:
-Я доклав значних зусиль для усунення попереджень Sonar, оптимізувавши логіку тестування та забезпечивши чистоту коду.
-Виправлення включали рефакторинг тестових методів та використання чітких, ізольованих викликів, що відповідають сучасним
- стандартам розробки.
-🧪 Результат: Тестовий клас TicketCrudServiceImplTest гарантує, що збереження квитка не відбудеться, якщо хоча б одне з
-полів (client, fromPlanet, toPlanet) є null або вказує на сутність, що не існує у базі даних.
+Entity relationships configured:
+• Added a @OneToMany link from the Client entity to its tickets (List<Ticket>).
+• Added @ManyToOne links in the Ticket entity to Client, fromPlanet and toPlanet.
+
+Validation logic implemented in TicketCrudServiceImpl.save():
+• If client is null or absent in the DB throws IllegalArgumentException.
+• If fromPlanet is null or absent in the DB throws an exception.
+• If toPlanet is null or absent in the DB throws an exception.
+
+Created JUnit test TicketCrudServiceImplTest that checks six critical cases:
+1) client == null
+2) client not found in the database
+3) fromPlanet == null
+4) fromPlanet not found in the database
+5) toPlanet == null
+6) toPlanet not found in the database
+
+Used Mockito to mock dependencies:
+• Mocked ClientCrudService and PlanetCrudService.
+• The findById(...) method returns null or valid objects to control save() behaviour.
+Tests are isolated from the real database.
+
+Special attention to Sonar warnings:
+• Invested significant effort to eliminate Sonar issues, optimising test logic and ensuring clean code.
+• Fixes included refactoring test methods and using clear, isolated calls that follow modern development standards.
+
+🧪 Result: TicketCrudServiceImplTest guarantees that a ticket will **not** be saved if any of the fields (client, fromPlanet, toPlanet) are null or reference entities that do not exist in the database.
 */
+
 public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     // === Log Message Constants ===
-    private static final String MSG_PLANET_SAVE_SUCCESS = "✅ Планету успішно збережено.";
-    private static final String MSG_PLANET_SAVE_ERROR = "⚠️ Помилка при збереженні: {}";
+    private static final String MSG_PLANET_SAVE_SUCCESS = "✅ Planet saved successfully.";
+    private static final String MSG_PLANET_SAVE_ERROR   = "⚠️ Error while saving: {}";
+
     private static final String MSG_PLANET_FOUND = "Found Planet: {}";
     private static final String MSG_ALL_PLANETS = "All Planets: {}";
 
@@ -63,7 +68,7 @@ public class App {
 
     public static void main(String[] args) {
         // Migrate DB if needed
-        // migrate();
+        migrate();
 
         // Initialize services
         ClientCrudService passengerService = new ClientCrudServiceImpl();
@@ -113,12 +118,12 @@ public class App {
             logger.info(MSG_PASSENGER_EXISTS_WARNING);
         }
 
-        // Try saving again to see the warning
-        try {
-            passengerService.save(p);
-        } catch (IllegalArgumentException e) {
-            logger.info(MSG_PASSENGER_EXISTS_WARNING);
-        }
+//        // Try saving again to see the warning
+//        try {
+//            passengerService.save(p);
+//        } catch (IllegalArgumentException e) {
+//            logger.info(MSG_PASSENGER_EXISTS_WARNING);
+//        }
 
         // Find the saved passenger to get the generated ID
         Client savedClient = passengerService.findAll().stream()
