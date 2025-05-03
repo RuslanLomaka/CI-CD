@@ -43,3 +43,4 @@ public class ClientCrudServiceImpl implements ClientCrudService {
         return HibernateHelper.findAllEntities(Client.class); // делегуємо утиліті
     }
 }
+
