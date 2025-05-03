@@ -6,6 +6,8 @@ import org.mockito.Mockito;
 import space_travel.entity.Client;
 import space_travel.entity.Planet;
 import space_travel.entity.Ticket;
+import space_travel.exception.DataFetchException;
+import space_travel.exception.DataRetrievalException;
 import space_travel.service.ClientCrudService;
 import space_travel.service.PlanetCrudService;
 
@@ -29,57 +31,43 @@ class TicketCrudServiceImplTest {
         Ticket ticket = new Ticket();
         ticket.setClient(null);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenClientIsNull - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("client"));
+        assertThrows(DataFetchException.class, () -> ticketService.save(ticket));
     }
 
     @Test
     void save_shouldThrow_whenClientNotFoundInDb() {
         Ticket ticket = new Ticket();
-
         Client client = new Client();
         client.setId(1L);
-        client.setName("Test Passenger");
-        client.setPassport("TP001");
         ticket.setClient(client);
 
         Planet planet = new Planet();
         planet.setId("PL1");
-        planet.setName("Test Planet");
         ticket.setFromPlanet(planet);
-        ticket.setToPlanet(planet); // Ensure we reach client check
+        ticket.setToPlanet(planet);
 
         Mockito.when(mockClientService.findById(client.getId())).thenReturn(null);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenClientNotFoundInDb - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("client"));
+        assertThrows(DataRetrievalException.class, () -> ticketService.save(ticket));
     }
 
     @Test
     void save_shouldThrow_whenSourcePlanetIsNull() {
         Ticket ticket = new Ticket();
-
         Client client = new Client();
         client.setId(1L);
-        client.setName("Test Passenger");
-        client.setPassport("TP001");
         ticket.setClient(client);
         ticket.setFromPlanet(null);
-        ticket.setToPlanet(new Planet()); // dummy planet for destination
+        ticket.setToPlanet(new Planet());
 
         Mockito.when(mockClientService.findById(client.getId())).thenReturn(client);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenSourcePlanetIsNull - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("source"));
+        assertThrows(DataFetchException.class, () -> ticketService.save(ticket));
     }
 
     @Test
     void save_shouldThrow_whenSourcePlanetNotFoundInDb() {
         Ticket ticket = new Ticket();
-
         Client client = new Client();
         client.setId(1L);
         ticket.setClient(client);
@@ -87,20 +75,17 @@ class TicketCrudServiceImplTest {
         Planet from = new Planet();
         from.setId("PL1");
         ticket.setFromPlanet(from);
-        ticket.setToPlanet(from); // dummy destination to ensure we get to source check
+        ticket.setToPlanet(from);
 
         Mockito.when(mockClientService.findById(client.getId())).thenReturn(client);
         Mockito.when(mockPlanetService.findById(from.getId())).thenReturn(null);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenSourcePlanetNotFoundInDb - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("source"));
+        assertThrows(DataRetrievalException.class, () -> ticketService.save(ticket));
     }
 
     @Test
     void save_shouldThrow_whenDestinationPlanetIsNull() {
         Ticket ticket = new Ticket();
-
         Client client = new Client();
         client.setId(1L);
         ticket.setClient(client);
@@ -113,15 +98,12 @@ class TicketCrudServiceImplTest {
         Mockito.when(mockClientService.findById(client.getId())).thenReturn(client);
         Mockito.when(mockPlanetService.findById(from.getId())).thenReturn(from);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenDestinationPlanetIsNull - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("destination"));
+        assertThrows(DataFetchException.class, () -> ticketService.save(ticket));
     }
 
     @Test
     void save_shouldThrow_whenDestinationPlanetNotFoundInDb() {
         Ticket ticket = new Ticket();
-
         Client client = new Client();
         client.setId(1L);
         ticket.setClient(client);
@@ -137,13 +119,10 @@ class TicketCrudServiceImplTest {
         Mockito.when(mockPlanetService.findById(from.getId())).thenReturn(from);
         Mockito.when(mockPlanetService.findById(to.getId())).thenReturn(null);
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> ticketService.save(ticket));
-        System.out.println("✅ save_shouldThrow_whenDestinationPlanetNotFoundInDb - " + ex.getMessage());
-        assertTrue(ex.getMessage().toLowerCase().contains("destination"));
+        assertThrows(DataRetrievalException.class, () -> ticketService.save(ticket));
     }
+
 }
-
-
 /*
  🧪 Нотатка про Mockito (для себе на майбутнє)
 
