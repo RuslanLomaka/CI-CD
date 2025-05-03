@@ -16,7 +16,7 @@ import space_travel.service.TicketCrudService;
 
 import java.time.Instant;
 import java.util.List;
-
+// trigger CI
 // ✅ Підсумок виконаної роботи
 /*
 Налаштовано зв’язки між сутностями:
@@ -28,11 +28,11 @@ import java.util.List;
 Якщо toPlanet дорівнює null або не існує в БД — кидається виняток.
 Створено JUnit-тест TicketCrudServiceImplTest, який перевіряє шість критичних ситуацій:
 client == null
-client не знайдено у базі даних
+client не знайдено в базі даних
 fromPlanet == null
-fromPlanet не знайдено у базі даних
+fromPlanet не знайдено в базі даних
 toPlanet == null
-toPlanet не знайдено у базі даних
+toPlanet не знайдено в базі даних
 Використано Mockito для мокування залежностей:
 Замокано сервіси ClientCrudService і PlanetCrudService.
 Метод findById(...) для клієнта/планети підставляє null або валідні значення для контролю поведінки методу save().

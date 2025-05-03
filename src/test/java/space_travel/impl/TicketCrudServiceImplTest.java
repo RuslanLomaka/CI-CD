@@ -1,5 +1,6 @@
 package space_travel.impl;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,6 +25,11 @@ class TicketCrudServiceImplTest {
         mockClientService = Mockito.mock(ClientCrudService.class);
         mockPlanetService = Mockito.mock(PlanetCrudService.class);
         ticketService = new TicketCrudServiceImpl(mockClientService, mockPlanetService);
+    }
+
+    @Test
+    void testSomething() {
+        Assertions.assertEquals(1, 2); // Fail on purpose
     }
 
     @Test
