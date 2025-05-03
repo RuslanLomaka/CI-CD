@@ -27,11 +27,11 @@ class TicketCrudServiceImplTest {
         ticketService = new TicketCrudServiceImpl(mockClientService, mockPlanetService);
     }
 
+
     @Test
     void testSomething() {
         Assertions.assertEquals(1, 2); // Fail on purpose
     }
-
 
 
     @Test
