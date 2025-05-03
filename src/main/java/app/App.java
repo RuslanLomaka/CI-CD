@@ -16,7 +16,7 @@ import space_travel.service.TicketCrudService;
 
 import java.time.Instant;
 import java.util.List;
-
+// trigger CI
 // ✅ Підсумок виконаної роботи
 /*
 Налаштовано зв’язки між сутностями:
