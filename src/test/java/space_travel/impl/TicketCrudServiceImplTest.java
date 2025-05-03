@@ -11,7 +11,7 @@ import space_travel.exception.DataRetrievalException;
 import space_travel.service.ClientCrudService;
 import space_travel.service.PlanetCrudService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TicketCrudServiceImplTest {
 
@@ -134,7 +134,7 @@ class TicketCrudServiceImplTest {
  - Mockito дозволяє створити "фейкові" сервіси й задати їх поведінку
  - Це робить тести легкими, швидкими й незалежними від БД
 
- ❗ Без Mockito довелось би:
+ ❗ Без Mockito довелося би:
  - Створювати реальні реалізації сервісів (ClientCrudServiceImpl тощо)
  - Налаштовувати Hibernate + БД навіть для простих перевірок null
  - Це вже був би інтеграційний тест, а не юніт-тест
