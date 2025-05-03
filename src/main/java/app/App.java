@@ -161,6 +161,9 @@ public class App {
         logger.info(MSG_EXECUTION_DONE);
     }
 
+
+
+
     public static void migrate() {
         Flyway.configure()
                 .dataSource("jdbc:h2:./spacetrain", "", "")
