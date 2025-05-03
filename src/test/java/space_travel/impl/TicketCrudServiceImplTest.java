@@ -32,6 +32,8 @@ class TicketCrudServiceImplTest {
         Assertions.assertEquals(1, 2); // Fail on purpose
     }
 
+
+
     @Test
     void save_shouldThrow_whenClientIsNull() {
         Ticket ticket = new Ticket();
