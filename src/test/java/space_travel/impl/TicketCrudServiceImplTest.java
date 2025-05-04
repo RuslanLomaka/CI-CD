@@ -28,10 +28,6 @@ class TicketCrudServiceImplTest {
     }
 
 
-    @Test
-    void testSomething() {
-        Assertions.assertEquals(1, 2); // Fail on purpose
-    }
 
 
     @Test
